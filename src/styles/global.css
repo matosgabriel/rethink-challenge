@@ -1,0 +1,26 @@
+@import url("../fonts/messina/stylesheet.css");
+
+:root {
+  --white: #fff;
+  --gray: #e7e7e7;
+  --black: #1b1b1b;
+  --pear: #d3f13a;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  font-family: "Messina Sans", sans-serif;
+  background: var(--black);
+  height: 100vh;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+}
