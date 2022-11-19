@@ -3,14 +3,15 @@
 :root {
   --white: #fff;
   --gray: #e7e7e7;
-  --black: #1b1b1b;
+  --black-800: #1b1b1b;
+  --black-900: #0a0a0a;
   --pear: #d3f13a;
 }
 
 body {
   -webkit-font-smoothing: antialiased;
   font-family: "Messina Sans", sans-serif;
-  background: var(--black);
+  background: var(--black-800);
   height: 100vh;
 }
 
@@ -23,4 +24,8 @@ body {
 h1 {
   font-size: 32px;
   font-weight: bold;
+}
+
+a {
+  text-decoration: none;
 }

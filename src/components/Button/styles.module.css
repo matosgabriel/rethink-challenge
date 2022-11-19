@@ -3,17 +3,18 @@
   align-items: center;
   justify-content: center;
 
-  padding: 18px 40px;
+  padding: 18px 30px;
   font-size: 16px;
   font-family: "Messina Sans", sans-serif;
   background-color: var(--pear);
   border: 2px solid var(--pear);
   color: var(--black);
   height: 48px;
+  cursor: pointer;
 }
 
 .button:hover {
   transition: 0.2s background;
-  background-color: var(--black);
+  background-color: var(--black-800);
   color: var(--pear);
 }

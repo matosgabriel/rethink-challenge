@@ -1,0 +1,41 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+
+  width: 100%;
+  padding: 5vh 10% 0;
+
+  color: var(--white);
+}
+
+.header h1 {
+  color: var(--white);
+}
+
+.navigator {
+  display: flex;
+  gap: 20px;
+}
+
+.navigator a {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.navigator a:hover {
+  transition: 0.1s color;
+  color: var(--pear);
+}
+
+.active {
+  transition: 0.1s color;
+  color: var(--pear);
+}
+
+@media (max-width: 720px) {
+  .header {
+    padding: 3vw 10% 3vw 10%;
+  }
+}
