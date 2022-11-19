@@ -1,0 +1,19 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px 40px;
+  font-size: 16px;
+  font-family: "Messina Sans", sans-serif;
+  background-color: var(--pear);
+  border: 2px solid var(--pear);
+  color: var(--black);
+  height: 48px;
+}
+
+.button:hover {
+  transition: 0.2s background;
+  background-color: var(--black);
+  color: var(--pear);
+}
