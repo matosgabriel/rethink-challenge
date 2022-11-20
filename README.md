@@ -14,7 +14,6 @@
   ```bash
   yarn install
   ```
-  ou
   ```bash
   npm install
   ```
