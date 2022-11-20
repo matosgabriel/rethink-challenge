@@ -11,6 +11,8 @@
   color: var(--black);
   height: 48px;
   cursor: pointer;
+  border-radius: 2px;
+  font-weight: 600;
 }
 
 .button:hover {

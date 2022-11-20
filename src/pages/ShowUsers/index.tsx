@@ -8,6 +8,8 @@ function ShowUsers() {
       <Header />
 
       <main className={styles.main}></main>
+
+      <div className={styles.fillBox}></div>
     </div>
   );
 }
