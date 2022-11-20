@@ -52,7 +52,7 @@
   width: 100%;
   gap: 10px;
 
-  overflow-y: scroll;
+  overflow-y: overlay;
 }
 
 .searchBox li {

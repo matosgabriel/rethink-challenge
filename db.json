@@ -1,22 +1,3 @@
 {
-  "persons": [
-    {
-      "name": "Willian",
-      "age": 50,
-      "occupation": "Taxista",
-      "email": "willian@gmail.com",
-      "phone": "(21) 9 9123-3124",
-      "fillDate": "2022-11-20T00:00:00.000Z",
-      "id": "9ac454e3-fd58-4c14-b9b1-061cce5cb607"
-    },
-    {
-      "name": "arara",
-      "age": 12,
-      "occupation": "arara",
-      "email": "arara@arara",
-      "phone": "(11) 1 1111-1111",
-      "fillDate": "2022-11-20T00:00:00.000Z",
-      "id": "c758f9ff-cab1-44ba-85a0-c3c7ec4aac9e"
-    }
-  ]
+  "persons": []
 }
