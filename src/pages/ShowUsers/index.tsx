@@ -7,7 +7,9 @@ function ShowUsers() {
     <div className={styles.container}>
       <Header />
 
-      <main className={styles.main}></main>
+      <main className={styles.main}>
+        <div className={styles.listing}></div>
+      </main>
 
       <div className={styles.fillBox}></div>
     </div>
