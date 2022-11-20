@@ -15,7 +15,7 @@ function Registration() {
   const [occupation, setOccupation] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-  const [fillDate, setFillDate] = useState<string>();
+  const [fillDate, setFillDate] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -40,6 +40,7 @@ function Registration() {
           theme: "dark",
           position: "bottom-center",
           style: { background: "var(--black-900)" },
+          progressStyle: { background: "var(--pear)" },
         });
       } catch {
         // Error toastify message
@@ -58,81 +59,99 @@ function Registration() {
     <div className={styles.container}>
       <Header />
 
-      <main className={styles.main}>
-        <h1>Cadastro</h1>
+      <div className={styles.content}>
+        <aside className={styles.searchBox}>
+          <h1>Busca</h1>
 
-        <form className={styles.form} onSubmit={formSubmit}>
-          <div className={styles.input1}>
-            <Input
-              label="Nome"
-              placeholder="Fulano"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className={styles.input2}>
-            <Input
-              label="Idade"
-              placeholder="32"
-              type="number"
-              min={0}
-              value={age}
-              onChange={(e) => setAge(Number(e.target.value))}
-              required
-            />
-          </div>
-          <div className={styles.input3}>
-            <Input
-              label="Profissão"
-              placeholder="Taxista"
-              value={occupation}
-              onChange={(e) => setOccupation(e.target.value)}
-              required
-            />
-          </div>
-          <div className={styles.input4}>
-            <Input
-              label="Email"
-              type="email"
-              placeholder="fulano@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className={styles.input5}>
-            <Input
-              label="Telefone"
-              placeholder="(31) 9 9999-9999"
-              type="tel"
-              pattern="\([0-9]{2}\) [0-9] [0-9]{4}-[0-9]{4}"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-            />
-          </div>
-          <div className={styles.input6}>
-            <Input
-              label="Data de preenchimento"
-              placeholder="01/01/2023"
-              type="date"
-              value={fillDate}
-              onChange={(e) => setFillDate(e.target.value)}
-              required
-            />
-          </div>
+          <Input placeholder="Fulano" />
 
-          <div className={styles.buttons}>
-            <Button
-              title="Cancelar"
-              type="button"
-              onClick={() => navigate("/")}
-            />
-            <Button title="Enviar" type="submit" />
+          <div className={styles.searchResults}>
+            <ul>
+              <li onClick={() => console.log("clicou")}>Gabriel</li>
+              <li onClick={() => console.log("clicou")}>Gabriel</li>
+              <li onClick={() => console.log("clicou")}>Gabriel</li>
+            </ul>
+
+            {/* <h2>Sem resultados</h2> */}
           </div>
-        </form>
-      </main>
+        </aside>
+
+        <main className={styles.main}>
+          <h1>Informações</h1>
+
+          <form className={styles.form} onSubmit={formSubmit}>
+            <div className={styles.input1}>
+              <Input
+                label="Nome"
+                placeholder="Fulano"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className={styles.input2}>
+              <Input
+                label="Idade"
+                placeholder="32"
+                type="number"
+                min={0}
+                value={age}
+                onChange={(e) => setAge(Number(e.target.value))}
+                required
+              />
+            </div>
+            <div className={styles.input3}>
+              <Input
+                label="Profissão"
+                placeholder="Taxista"
+                value={occupation}
+                onChange={(e) => setOccupation(e.target.value)}
+                required
+              />
+            </div>
+            <div className={styles.input4}>
+              <Input
+                label="Email"
+                type="email"
+                placeholder="fulano@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className={styles.input5}>
+              <Input
+                label="Telefone"
+                placeholder="(31) 9 9999-9999"
+                type="tel"
+                pattern="\([0-9]{2}\) [0-9] [0-9]{4}-[0-9]{4}"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+              />
+            </div>
+            <div className={styles.input6}>
+              <Input
+                label="Data de preenchimento"
+                placeholder="01/01/2023"
+                type="date"
+                value={fillDate}
+                onChange={(e) => setFillDate(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className={styles.buttons}>
+              <Button
+                title="Limpar"
+                type="button"
+                onClick={() => navigate("/")}
+              />
+              <Button title="Cadastrar" type="submit" />
+            </div>
+          </form>
+        </main>
+      </div>
       <div className={styles.fillBox}></div>
     </div>
   );

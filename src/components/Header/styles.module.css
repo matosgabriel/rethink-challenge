@@ -45,8 +45,8 @@
   color: var(--black-800);
 }
 
-@media (max-width: 720px) {
+/* @media (max-width: 720px) {
   .header {
     padding: 3vw 10% 3vw 10%;
   }
-}
+} */
