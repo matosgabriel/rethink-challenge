@@ -15,6 +15,7 @@
 
   margin: auto;
   width: auto;
+  padding-bottom: 40px;
 
   gap: 20px 10px;
 }
@@ -82,20 +83,6 @@
   margin-bottom: 32px;
   color: var(--white);
   font-size: 28px;
-}
-
-@keyframes example {
-  from {
-    background-color: red;
-  }
-  to {
-    background-color: yellow;
-  }
-}
-
-.main h1 span {
-  animation-name: example;
-  animation-duration: 1s;
 }
 
 .input1 {

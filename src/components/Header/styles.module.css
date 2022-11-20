@@ -50,3 +50,9 @@
     padding: 3vw 10% 3vw 10%;
   }
 } */
+
+@media (max-width: 1200px) {
+  .header {
+    padding: 5vh 15% 10px;
+  }
+}

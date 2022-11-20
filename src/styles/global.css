@@ -3,6 +3,7 @@
 :root {
   --white: #fff;
   --gray: #e7e7e7;
+  --black-600: #424242;
   --black-800: #1b1b1b;
   --black-900: #0a0a0a;
   --pear: #d3f13a;
@@ -13,6 +14,7 @@ body {
   font-family: "Messina Sans", sans-serif;
   background: var(--black-800);
   height: 100vh;
+  overflow: overlay;
 }
 
 * {
@@ -32,4 +34,20 @@ a {
 
 ul {
   list-style: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--black-800);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #444;
 }

@@ -18,9 +18,10 @@ interface Person {
   fillDate: string;
 }
 
-function Registration() {
+function Home() {
   const [search, setSearch] = useState<string>("");
   const [formSubmitionEnabled, setFormSubmitionEnabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [name, setName] = useState<string>("");
   const [age, setAge] = useState<string>("");
@@ -84,6 +85,7 @@ function Registration() {
       e.preventDefault();
 
       try {
+        setLoading(true);
         const newPerson = {
           name,
           age: Number(age),
@@ -98,12 +100,12 @@ function Registration() {
           "/persons",
           newPerson
         );
-        console.log(insertedPerson);
 
         setPersons((prevState) => {
           return prevState ? [...prevState, insertedPerson] : [insertedPerson];
         });
 
+        // Add the inserted person to filtered persons (by the search) if necessary
         insertedPerson.name.startsWith(search) &&
           setFilteredPersons((prevState) => {
             return prevState
@@ -111,13 +113,14 @@ function Registration() {
               : [insertedPerson];
           });
 
+        handleClearForm(); // Clearing the form
+
         // Success toastify notification
         toast("Cadastro realizado com sucesso", {
           type: "success",
           theme: "dark",
           position: "bottom-center",
           style: { background: "var(--black-900)" },
-          progressStyle: { background: "var(--pear)" },
         });
       } catch {
         // Error toastify notification
@@ -127,9 +130,11 @@ function Registration() {
           position: "bottom-center",
           style: { background: "var(--black-900)" },
         });
+      } finally {
+        setLoading(false);
       }
     },
-    [name, age, occupation, email, phone, fillDate, search]
+    [name, age, occupation, email, phone, fillDate, search, handleClearForm]
   );
 
   return (
@@ -246,7 +251,6 @@ function Registration() {
                 value={fillDate}
                 onChange={(e) => {
                   setFillDate(e.target.value);
-                  console.log(e.target.value);
                 }}
                 disabled={!formSubmitionEnabled}
                 required
@@ -256,7 +260,7 @@ function Registration() {
             <div className={styles.buttons}>
               <Button title="Limpar" type="button" onClick={handleClearForm} />
               <Button
-                title="Cadastrar"
+                title={loading ? "Cadastrando..." : "Cadastrar"}
                 type="submit"
                 disabled={!formSubmitionEnabled}
               />
@@ -269,4 +273,4 @@ function Registration() {
   );
 }
 
-export { Registration };
+export { Home };
