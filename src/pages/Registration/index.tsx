@@ -1,40 +1,117 @@
-import { FormEvent, useCallback, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { toast } from "react-toastify";
 import { Header } from "../../components/Header";
-import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import { api } from "../../utils/api";
 import styles from "./styles.module.css";
 
+interface Person {
+  id: string;
+  name: string;
+  age: number;
+  occupation: string;
+  email: string;
+  phone: string;
+  fillDate: string;
+}
+
 function Registration() {
+  const [search, setSearch] = useState<string>("");
+  const [formSubmitionEnabled, setFormSubmitionEnabled] = useState(true);
+
   const [name, setName] = useState<string>("");
-  const [age, setAge] = useState<number>();
+  const [age, setAge] = useState<string>("");
   const [occupation, setOccupation] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [fillDate, setFillDate] = useState<string>("");
 
-  const navigate = useNavigate();
+  const [persons, setPersons] = useState<Person[]>();
+  const [filteredPersons, setFilteredPersons] = useState<Person[]>();
 
+  // Load data of all registered persons
+  useEffect(() => {
+    api.get("/persons").then((response) => {
+      setPersons(response.data);
+      setFilteredPersons(response.data);
+    });
+  }, []);
+
+  // Handle the search by a person name
+  const handleSearch = useCallback(
+    (searchValue: string) => {
+      setSearch(searchValue);
+
+      const findPersons = persons?.filter((person) =>
+        person.name.toLowerCase().startsWith(searchValue.toLowerCase())
+      );
+
+      setFilteredPersons(findPersons);
+    },
+    [persons]
+  );
+
+  // Handle the selection of a person from search results
+  const handleSelectPerson = useCallback((person: Person) => {
+    setName(person.name);
+    setAge(person.age.toString());
+    setOccupation(person.occupation);
+    setEmail(person.email);
+    setPhone(person.phone);
+    setFillDate(person.fillDate.split("T")[0]);
+
+    setFormSubmitionEnabled(false);
+  }, []);
+
+  // Handle clear the form inputs and enable submit button
+  const handleClearForm = useCallback(() => {
+    setName("");
+    setAge("");
+    setOccupation("");
+    setEmail("");
+    setPhone("");
+    setFillDate("");
+
+    setFormSubmitionEnabled(true);
+  }, []);
+
+  // Handle form submit (insert a new person)
   const formSubmit = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
 
       try {
-        await api.post("/persons", {
+        const newPerson = {
           name,
-          age,
+          age: Number(age),
           occupation,
           email,
           phone,
           fillDate: fillDate ? new Date(fillDate) : undefined, // Converting the string from input to a date
           id: uuidv4(), // Generating a new random universal unique identificator
+        };
+
+        const { data: insertedPerson } = await api.post<Person>(
+          "/persons",
+          newPerson
+        );
+        console.log(insertedPerson);
+
+        setPersons((prevState) => {
+          return prevState ? [...prevState, insertedPerson] : [insertedPerson];
         });
 
-        // Success toastify message
+        insertedPerson.name.startsWith(search) &&
+          setFilteredPersons((prevState) => {
+            return prevState
+              ? [insertedPerson, ...prevState]
+              : [insertedPerson];
+          });
+
+        // Success toastify notification
         toast("Cadastro realizado com sucesso", {
           type: "success",
           theme: "dark",
@@ -43,7 +120,7 @@ function Registration() {
           progressStyle: { background: "var(--pear)" },
         });
       } catch {
-        // Error toastify message
+        // Error toastify notification
         toast("Erro ao efetuar cadastro", {
           type: "error",
           theme: "dark",
@@ -52,7 +129,7 @@ function Registration() {
         });
       }
     },
-    [name, age, occupation, email, phone, fillDate]
+    [name, age, occupation, email, phone, fillDate, search]
   );
 
   return (
@@ -63,21 +140,47 @@ function Registration() {
         <aside className={styles.searchBox}>
           <h1>Busca</h1>
 
-          <Input placeholder="Fulano" />
+          <Input
+            placeholder="Fulano"
+            label="Nome"
+            value={search}
+            onChange={(e) => handleSearch(e.target.value)}
+            type="search"
+          />
 
           <div className={styles.searchResults}>
-            <ul>
-              <li onClick={() => console.log("clicou")}>Gabriel</li>
-              <li onClick={() => console.log("clicou")}>Gabriel</li>
-              <li onClick={() => console.log("clicou")}>Gabriel</li>
-            </ul>
-
-            {/* <h2>Sem resultados</h2> */}
+            {filteredPersons?.length === 0 ? (
+              <h2>Sem resultados</h2>
+            ) : (
+              <ul>
+                {search.length > 0
+                  ? filteredPersons?.map((person) => {
+                      return (
+                        <li
+                          key={person.id}
+                          onClick={() => handleSelectPerson(person)}
+                        >
+                          {person.name}
+                        </li>
+                      );
+                    })
+                  : persons?.map((person) => {
+                      return (
+                        <li
+                          key={person.id}
+                          onClick={() => handleSelectPerson(person)}
+                        >
+                          {person.name}
+                        </li>
+                      );
+                    })}
+              </ul>
+            )}
           </div>
         </aside>
 
         <main className={styles.main}>
-          <h1>Informações</h1>
+          <h1>Dados{!formSubmitionEnabled && <span> de {name}</span>}</h1>
 
           <form className={styles.form} onSubmit={formSubmit}>
             <div className={styles.input1}>
@@ -86,6 +189,7 @@ function Registration() {
                 placeholder="Fulano"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                disabled={!formSubmitionEnabled}
                 required
               />
             </div>
@@ -96,7 +200,8 @@ function Registration() {
                 type="number"
                 min={0}
                 value={age}
-                onChange={(e) => setAge(Number(e.target.value))}
+                onChange={(e) => setAge(e.target.value)}
+                disabled={!formSubmitionEnabled}
                 required
               />
             </div>
@@ -106,6 +211,7 @@ function Registration() {
                 placeholder="Taxista"
                 value={occupation}
                 onChange={(e) => setOccupation(e.target.value)}
+                disabled={!formSubmitionEnabled}
                 required
               />
             </div>
@@ -116,6 +222,7 @@ function Registration() {
                 placeholder="fulano@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={!formSubmitionEnabled}
                 required
               />
             </div>
@@ -127,6 +234,7 @@ function Registration() {
                 pattern="\([0-9]{2}\) [0-9] [0-9]{4}-[0-9]{4}"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                disabled={!formSubmitionEnabled}
                 required
               />
             </div>
@@ -136,18 +244,22 @@ function Registration() {
                 placeholder="01/01/2023"
                 type="date"
                 value={fillDate}
-                onChange={(e) => setFillDate(e.target.value)}
+                onChange={(e) => {
+                  setFillDate(e.target.value);
+                  console.log(e.target.value);
+                }}
+                disabled={!formSubmitionEnabled}
                 required
               />
             </div>
 
             <div className={styles.buttons}>
+              <Button title="Limpar" type="button" onClick={handleClearForm} />
               <Button
-                title="Limpar"
-                type="button"
-                onClick={() => navigate("/")}
+                title="Cadastrar"
+                type="submit"
+                disabled={!formSubmitionEnabled}
               />
-              <Button title="Cadastrar" type="submit" />
             </div>
           </form>
         </main>

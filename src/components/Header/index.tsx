@@ -13,14 +13,7 @@ function Header() {
       <nav className={styles.navigator}>
         <Link to="/">
           <span className={pathname === "/" ? styles.active : undefined}>
-            Listagem
-          </span>
-        </Link>
-        <Link to="/registration">
-          <span
-            className={pathname === "/registration" ? styles.active : undefined}
-          >
-            Cadastro
+            Formulário
           </span>
         </Link>
       </nav>

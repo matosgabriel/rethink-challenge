@@ -47,7 +47,7 @@
 .searchBox ul {
   display: flex;
   flex-direction: column;
-  height: 220px;
+  height: 200px;
   width: 100%;
   gap: 10px;
 
@@ -82,6 +82,20 @@
   margin-bottom: 32px;
   color: var(--white);
   font-size: 28px;
+}
+
+@keyframes example {
+  from {
+    background-color: red;
+  }
+  to {
+    background-color: yellow;
+  }
+}
+
+.main h1 span {
+  animation-name: example;
+  animation-duration: 1s;
 }
 
 .input1 {
@@ -133,12 +147,12 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 45vh;
+  height: 62vh;
   background-color: var(--pear);
   z-index: -1;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1200px) {
   .content {
     flex-direction: column;
   }
@@ -149,10 +163,6 @@
 
   .searchBox ul {
     height: 140px;
-  }
-
-  .form {
-    gap: 20px 0;
   }
 }
 
