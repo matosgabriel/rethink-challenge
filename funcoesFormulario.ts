@@ -14,12 +14,12 @@ const pessoas: Person[] = [
   { name: "Antonio Miguel", age: 69 },
 ];
 
-// Retorna os dados de uma pessoa pelo nome passado via parâmetros
+// 3 - Retorna os dados de uma pessoa pelo nome passado via parâmetros
 function findByName(personsList: Person[], name: string): Person | undefined {
   return personsList.find((person) => person.name === name);
 }
 
-// Retorna um vetor com os nomes das pessoas
+// 4 - Retorna um vetor com os nomes das pessoas
 function personsNames(personsList: Person[]): string[] {
   const names = personsList.map((person) => {
     return person.name.split(" ")[0];
@@ -28,7 +28,7 @@ function personsNames(personsList: Person[]): string[] {
   return names;
 }
 
-// Insire um id único para cada pessoa no vetor
+// 5 - Insere um id único para cada pessoa no vetor
 function giveId(personsList: Person[]): Person[] {
   const persons = personsList.map((person, index) => {
     return {
@@ -41,14 +41,14 @@ function giveId(personsList: Person[]): Person[] {
   return persons;
 }
 
-// Retorna os dados das pessoas para quem tem idade suficiente para tirar a primeira habilitação
+// 6 - Retorna os dados das pessoas para quem tem idade suficiente para tirar a primeira habilitação
 function ageGreaterThan18(personsList: Person[]): Person[] {
   const persons = personsList.filter((person) => person.age >= 18);
 
   return persons;
 }
 
-// Retorna a média das idades das pessoas
+// 7 - Retorna a média das idades das pessoas
 function ageAverage(personsList: Person[]): number {
   const ageSum = personsList
     .map((person) => person.age)
