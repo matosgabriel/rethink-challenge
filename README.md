@@ -32,3 +32,5 @@
   npm run start
   ```
 - Acessar o app via navegador no endereço http://localhost:3000
+
+As funções requisitadas foram implementadas no arquivo funcoesFormulario.ts
